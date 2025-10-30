@@ -19,29 +19,27 @@
     text-shadow: 0 0 15px #000;
   }
 
-  /* Container principal */
+  /* Conteúdo principal */
   #hommageContainer {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 40px 20px;
-    min-height: 100vh;
   }
 
   .message {
     max-width: 700px;
     text-align: center;
     font-size: 1.4em;
-    margin-top: 15px;
   }
 
-  /* Galeria Polaroid */
+  /* Polaroid */
   .photo-gallery {
     display: flex;
     flex-wrap: wrap;
     gap: 25px;
     justify-content: center;
-    margin-top: 40px;
+    margin-top: 30px;
   }
 
   .photo-card {
@@ -59,9 +57,7 @@
     position: relative;
   }
 
-  .photo-card.flip .inner {
-    transform: rotateY(180deg);
-  }
+  .photo-card.flip .inner { transform: rotateY(180deg); }
 
   .front, .back {
     position: absolute;
@@ -73,27 +69,7 @@
     box-shadow: 0 8px 25px rgba(0,0,0,0.6);
   }
 
-  .front {
-    background: white;
-    padding: 10px;
-    box-sizing: border-box;
-  }
-
-  .front img {
-    width: 100%;
-    height: 85%;
-    object-fit: cover;
-    border-radius: 10px;
-  }
-
-  .front p {
-    color: #4B0082;
-    text-align: center;
-    font-size: 1em;
-    margin-top: 5px;
-    font-weight: bold;
-  }
-
+  .front img { width: 100%; height: 100%; object-fit: cover; }
   .back {
     background: #fff;
     color: #4B0082;
@@ -106,9 +82,14 @@
     align-items: center;
   }
 
-  /* Música */
-  .music-controls button {
+  /* Botões */
+  .controls {
+    display: flex;
+    gap: 15px;
     margin-top: 35px;
+  }
+
+  .controls button {
     padding: 14px 30px;
     border: none;
     background: white;
@@ -116,7 +97,6 @@
     border-radius: 14px;
     animation: heartbeat 1.3s infinite;
     cursor: pointer;
-    font-weight: bold;
   }
 
   @keyframes heartbeat {
@@ -140,15 +120,16 @@
 </head>
 <body>
 
-<!-- SURPRESA -->
+<!-- CONTEÚDO -->
 <div id="hommageContainer">
   <h1>Feliz Aniversário, Meu Amor! 💖</h1>
   <p class="message">Você é o meu motivo de sorriso todos os dias... 💗</p>
 
-  <div class="photo-gallery"></div>
+  <div class="photo-gallery" id="gallery"></div>
 
-  <div class="music-controls">
+  <div class="controls">
     <button id="musicButton">Tocar Música 🎶</button>
+    <button onclick="window.location.href='surpresa.html'">Surpresa 🎁</button>
   </div>
 
   <audio id="birthdayMusic" loop>
@@ -157,56 +138,53 @@
 </div>
 
 <script>
-/* Fotos e mensagens */
+/* Suas fotos */
 const fotos = [
-  ["https://github.com/user-attachments/assets/cb50c28f-cfb2-46dc-adcf-8a47c4958bdd", "Nosso primeiro momento 💞"],
-  ["https://github.com/user-attachments/assets/69ad113e-8f69-42cf-bb2c-6d51d9f83f80", "Um dia especial contigo ❤️"],
-  ["https://github.com/user-attachments/assets/473bb60c-fbc2-4a6e-a14b-0aeff7baef18", "Sorrisos que amo 😍"],
-  ["https://github.com/user-attachments/assets/636cc626-06e1-44a0-9f99-326a37b74bf0", "Nossa bagunça favorita 😆"],
-  ["https://github.com/user-attachments/assets/558456ed-18c8-49e4-acdc-09cecb1f90c0", "Um momento inesquecível 💗"],
-  ["https://github.com/user-attachments/assets/5f1384ea-41f4-4ba9-b2a7-6aac28029180", "O teu olhar me encanta ✨"],
-  ["https://github.com/user-attachments/assets/26a18edb-6e3c-4bb7-812d-4a70a16d8005", "Te amo mais que tudo 💞"],
-  ["https://github.com/user-attachments/assets/0e0e848b-f7ca-4a28-bdd7-a30a4569d7a1", "Pra sempre nós 💝"],
-  ["https://github.com/user-attachments/assets/edb88f91-a1cf-4d14-8cff-eb178ad54d00", "Meu amor eterno 💕"]
+  ["https://github.com/user-attachments/assets/128f9cbf-805c-477b-9d58-f91d7f0b4430", "Um dos nossos melhores dias 💜"],
+  ["https://github.com/user-attachments/assets/313d96d1-e437-4d42-979b-2f5957127a0c", "Lembranças lindas 💫"],
+  ["https://github.com/user-attachments/assets/cb50c28f-cfb2-46dc-adcf-8a47c4958bdd", "Meu sorriso favorito 💞"],
+  ["https://github.com/user-attachments/assets/473bb60c-fbc2-4a6e-a14b-0aeff7baef18", "A gente e nossas risadas 😍"],
+  ["https://github.com/user-attachments/assets/636cc626-06e1-44a0-9f99-326a37b74bf0", "Sempre juntos 💕"],
+  ["https://github.com/user-attachments/assets/5f1384ea-41f4-4ba9-b2a7-6aac28029180", "Um dia inesquecível ✨"],
+  ["https://github.com/user-attachments/assets/26a18edb-6e3c-4bb7-812d-4a70a16d8005", "Meu amor por você 💗"],
+  ["https://github.com/user-attachments/assets/0e0e848b-f7ca-4a28-bdd7-a30a4569d7a1", "Momentos que guardo pra sempre ❤️"],
+  ["https://github.com/user-attachments/assets/edb88f91-a1cf-4d14-8cff-eb178ad54d00", "Te amo hoje e sempre 💞"]
 ];
 
-/* Renderizar galeria */
-const gallery = document.querySelector(".photo-gallery");
+/* Renderizar fotos */
+const gallery = document.getElementById("gallery");
 fotos.forEach(f => {
-  gallery.innerHTML += `
-    <div class="photo-card">
-      <div class="inner">
-        <div class="front">
-          <img src="${f[0]}" alt="Foto especial">
-          <p>Momentos 💜</p>
-        </div>
-        <div class="back">${f[1]}</div>
-      </div>
-    </div>`;
+  const card = document.createElement("div");
+  card.className = "photo-card";
+  card.innerHTML = `
+    <div class="inner">
+      <div class="front"><img src="${f[0]}" alt="foto"></div>
+      <div class="back">${f[1]}</div>
+    </div>
+  `;
+  gallery.appendChild(card);
 });
 
 /* Efeito virar */
 document.addEventListener("click", e => {
-  if (e.target.closest(".photo-card")) {
+  if(e.target.closest(".photo-card")) {
     e.target.closest(".photo-card").classList.toggle("flip");
   }
 });
 
 /* Música */
-const musicButton = document.getElementById("musicButton");
-const birthdayMusic = document.getElementById("birthdayMusic");
-
 musicButton.onclick = () => {
-  if (birthdayMusic.paused) {
-    birthdayMusic.play();
+  const music = document.getElementById("birthdayMusic");
+  if (music.paused) {
+    music.play();
     musicButton.textContent = "Pausar Música ⏸️";
   } else {
-    birthdayMusic.pause();
+    music.pause();
     musicButton.textContent = "Tocar Música 🎶";
   }
 };
 
-/* Corações animados */
+/* Corações flutuando */
 setInterval(() => {
   const h = document.createElement("div");
   h.className = "heart";
