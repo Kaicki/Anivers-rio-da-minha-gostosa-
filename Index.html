@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feliz Aniversário ❤️</title>
+<style>
+  body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #4B0082, #800080, #DA70D6);
+    color: #fff;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  h1, h2 {
+    text-align: center;
+    text-shadow: 2px 2px 10px #000;
+  }
+
+  /* ===== QUIZ ===== */
+  #quizContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+  }
+
+  .quiz-question {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .quiz-options button {
+    background-color: #fff;
+    color: #4B0082;
+    border: none;
+    padding: 12px 25px;
+    margin: 10px;
+    font-size: 1.2em;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+    animation: pop 0.5s ease;
+  }
+
+  .quiz-options button:hover {
+    background-color: #eee;
+  }
+
+  @keyframes pop {
+    0% { transform: scale(0.8); }
+    100% { transform: scale(1); }
+  }
+
+  /* ===== HOMENAGEM ===== */
+  #hommageContainer {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+
+  .message {
+    font-size: 1.5em;
+    margin: 20px;
+    text-align: center;
+    max-width: 800px;
+  }
+
+  /* ===== POLAROID FLIP CARD ===== */
+  .photo-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    margin: 20px 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .flip-card {
+    background-color: transparent;
+    width: 250px;
+    height: 300px;
+    perspective: 1000px;
+    cursor: pointer;
+  }
+
+  .flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+    border-radius: 10px;
+  }
+
+  .flip-card:hover .flip-card-inner {
+    /* efeito opcional ao passar o mouse */
+  }
+
+  .flip-card.flip .flip-card-inner {
+    transform: rotateY(180deg);
+  }
+
+  .flip-card-front, .flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    backface-visibility: hidden;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.7);
+  }
+
+  .flip-card-front {
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .flip-card-front img {
+    width: 230px;
+    height: 230px;
+    object-fit: cover;
+    border-radius: 5px;
+  }
+
+  .flip-card-back {
+    background: rgba(75,0,130,0.85);
+    color: #fff;
+    transform: rotateY(180deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    font-size: 1em;
+    border-radius: 10px;
+  }
+
+  .music-controls {
+    margin-top: 20px;
+    z-index: 1;
+    position: relative;
+  }
+
+  .music-controls button {
+    background-color: #fff;
+    color: #4B0082;
+    border: none;
+    padding: 12px 25px;
+    font-size: 1.2em;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+    animation: heartbeat 1.2s infinite;
+  }
+
+  .music-controls button:hover {
+    background-color: #eee;
+  }
+
+  @keyframes heartbeat {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+  }
+
+  footer {
+    margin-top: 40px;
+    padding: 20px;
+    font-size: 1em;
+    text-align: center;
+    color: #eee;
+    z-index: 1;
+    position: relative;
+  }
+
+  /* ===== CORAÇÕES ===== */
+  .heart {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: rgba(255,182,193,0.8);
+    transform: rotate(-45deg);
+    pointer-events: none;
+  }
+
+  .heart::before,
+  .heart::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: rgba(255,182,193,0.8);
+    border-radius: 50%;
+  }
+
+  .heart::before { top: -10px; left: 0; }
+  .heart::after { left: 10px; top: 0; }
+
+  /* ===== PARTICULAS BRILHANTES ===== */
+  .particle {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0.8;
+  }
+
+  /* RESPONSIVO */
+  @media(max-width:768px){
+    .flip-card {
+      width: 80vw;
+      height: auto;
+    }
+
+    .flip-card-front img {
+      width: 100%;
+      height: auto;
+    }
+  }
+
+</style>
+</head>
+<body>
+
+<!-- QUIZ -->
+<div id="quizContainer">
+  <h2>Quiz do Amor 💖</h2>
+  <div class="quiz-question" id="quizQuestion"></div>
+  <div class="quiz-options" id="quizOptions"></div>
+</div>
+
+<!-- HOMENAGEM -->
+<div id="hommageContainer">
+  <h1>Feliz Aniversário, Amor! 💖</h1>
+  <p class="message">
+    Hoje é o seu dia especial e eu preparei essa pequena surpresa só para você!  
+    Que seu aniversário seja cheio de alegria, amor e momentos inesquecíveis! 🥰
+  </p>
+
+  <div class="photo-gallery">
+    <div class="flip-card">
+      <div class="flip-card-inner">
+        <div class="flip-card-front">
+          <img src="foto1.jpg" alt="Foto 1">
+        </div>
+        <div class="flip-card-back">
+          Seu texto aqui sobre a foto 1 💕
+        </div>
+      </div>
+    </div>
+    <div class="flip-card">
+      <div class="flip-card-inner">
+        <div class="flip-card-front">
+          <img src="foto2.jpg" alt="Foto 2">
+        </div>
+        <div class="flip-card-back">
+          Seu texto aqui sobre a foto 2 😄
+        </div>
+      </div>
+    </div>
+    <div class="flip-card">
+      <div class="flip-card-inner">
+        <div class="flip-card-front">
+          <img src="foto3.jpg" alt="Foto 3">
+        </div>
+        <div class="flip-card-back">
+          Seu texto aqui sobre a foto 3 ❤️
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="music-controls">
+    <button id="musicButton">Tocar Música 🎵</button>
+  </div>
+
+  <audio id="birthdayMusic" loop>
+    <source src="musica.mp3" type="audio/mpeg">
+    Seu navegador não suporta áudio.
+  </audio>
+
+  <footer>Feito com ❤️ para você, meu amor.</footer>
+</div>
+
+<script>
+  // ===== QUIZ =====
+  const quizQuestions = [
+    { question: "Qual é a minha comida favorita?", options: ["Pizza","Chocolate","Sorvete","Hambúrguer"], answer: 1 },
+    { question: "Onde nos conhecemos?", options: ["Escola","Trabalho","Internet","Amigos em comum"], answer: 3 },
+    { question: "Qual é a nossa música especial?", options: ["Song A","Song B","Song C","Song D"], answer: 2 }
+  ];
+
+  let currentQuestion = 0;
+  const quizContainer = document.getElementById('quizContainer');
+  const quizQuestion = document.getElementById('quizQuestion');
+  const quizOptions = document.getElementById('quizOptions');
+
+  function showQuestion() {
+    quizQuestion.textContent = quizQuestions[currentQuestion].question;
+    quizOptions.innerHTML = '';
+    quizQuestions[currentQuestion].options.forEach((opt,index)=>{
+      const btn=document.createElement('button');
+      btn.textContent=opt;
+      btn.addEventListener('click',()=>selectAnswer(index));
+      quizOptions.appendChild(btn);
+    });
+  }
+
+  function selectAnswer(index){
+    if(index === quizQuestions[currentQuestion].answer){
+      currentQuestion++;
+      if(currentQuestion < quizQuestions.length){
+        showQuestion();
+      }else{
+        quizContainer.style.display='none';
+        document.getElementById('hommageContainer').style.display='flex';
+      }
+    }else{
+      alert("Ops! Tente novamente 😅");
+    }
+  }
+
+  showQuestion();
+
+  // ===== MUSICA =====
+  const music = document.getElementById('birthdayMusic');
+  const button = document.getElementById('musicButton');
+
+  button.addEventListener('click',()=>{
+    if(music.paused){ music.play(); button.textContent="Pausar Música ⏸️"; }
+    else{ music.pause(); button.textContent="Tocar Música 🎵"; }
+  });
+
+  // ===== CORAÇÕES SEGUINDO O MOUSE =====
+  document.addEventListener('mousemove', e=>{
+    if(Math.random()<0.05){
+      const heart=document.createElement('div');
+      heart.className='heart';
+      heart.style.left=e.pageX+'px';
+      heart.style.top=e.pageY+'px';
+      heart.style.width=15+Math.random()*15+'px';
+      heart.style.height=heart.style.width;
+      document.body.appendChild(heart);
+      setTimeout(()=>heart.remove(),3000);
+    }
+  });
+
+  // ===== PARTICULAS BRILHANTES =====
+  setInterval(()=>{
+    const particle=document.createElement('div');
+    particle.className='particle';
+    particle.style.width=(2+Math.random()*4)+'px';
+    particle.style.height=particle.style.width;
+    particle.style.background='rgba(255,255,255,'+Math.random()+')';
+    particle.style.left=Math.random()*window.innerWidth+'px';
+    particle.style.top=window.innerHeight+'px';
+    document.body.appendChild(particle);
+    let top=window.innerHeight;
+    const move=setInterval(()=>{
+      top-=1+Math.random()*3;
+      particle.style.top=top+'px';
+      if(top<0){ clearInterval(move); particle.remove(); }
+    },20);
+  },100);
+
+  // ===== CLIQUE NAS POLAROIDS (FLIP CARD) =====
+  const flipCards=document.querySelectorAll('.flip-card');
+  flipCards.forEach(card=>{
+    card.addEventListener('click',()=>{ card.classList.toggle('flip'); });
+  });
+
+</script>
+
+</body>
+</html>
