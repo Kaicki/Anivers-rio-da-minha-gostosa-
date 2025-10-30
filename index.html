@@ -19,48 +19,29 @@
     text-shadow: 0 0 15px #000;
   }
 
-  /* Quiz */
-  #quizContainer {
+  /* Container principal */
+  #hommageContainer {
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-height: 100vh;
-    padding-top: 40px;
-  }
-
-  .quiz-question { font-size: 1.6em; margin-bottom: 20px; }
-  .quiz-options button {
-    padding: 12px 25px;
-    margin: 8px;
-    border: none;
-    border-radius: 12px;
-    font-size: 1.1em;
-    cursor: pointer;
-    background: white;
-    color: #4B0082;
-  }
-
-  /* Surpresa */
-  #hommageContainer {
-    display: none;
-    flex-direction: column;
-    align-items: center;
     padding: 40px 20px;
+    min-height: 100vh;
   }
 
   .message {
     max-width: 700px;
     text-align: center;
     font-size: 1.4em;
+    margin-top: 15px;
   }
 
-  /* Polaroid */
+  /* Galeria Polaroid */
   .photo-gallery {
     display: flex;
     flex-wrap: wrap;
     gap: 25px;
     justify-content: center;
-    margin-top: 30px;
+    margin-top: 40px;
   }
 
   .photo-card {
@@ -78,7 +59,9 @@
     position: relative;
   }
 
-  .photo-card.flip .inner { transform: rotateY(180deg); }
+  .photo-card.flip .inner {
+    transform: rotateY(180deg);
+  }
 
   .front, .back {
     position: absolute;
@@ -90,7 +73,27 @@
     box-shadow: 0 8px 25px rgba(0,0,0,0.6);
   }
 
-  .front img { width: 100%; height: 100%; object-fit: cover; }
+  .front {
+    background: white;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  .front img {
+    width: 100%;
+    height: 85%;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+
+  .front p {
+    color: #4B0082;
+    text-align: center;
+    font-size: 1em;
+    margin-top: 5px;
+    font-weight: bold;
+  }
+
   .back {
     background: #fff;
     color: #4B0082;
@@ -113,6 +116,7 @@
     border-radius: 14px;
     animation: heartbeat 1.3s infinite;
     cursor: pointer;
+    font-weight: bold;
   }
 
   @keyframes heartbeat {
@@ -136,35 +140,12 @@
 </head>
 <body>
 
-<!-- QUIZ -->
-<div id="quizContainer">
-  <h2>Quiz do Amor 💗</h2>
-  <div class="quiz-question" id="quizQuestion"></div>
-  <div class="quiz-options" id="quizOptions"></div>
-</div>
-
 <!-- SURPRESA -->
 <div id="hommageContainer">
   <h1>Feliz Aniversário, Meu Amor! 💖</h1>
   <p class="message">Você é o meu motivo de sorriso todos os dias... 💗</p>
 
-  <div class="photo-gallery">
-
-    <!-- 8 FOTOS -->
-    <script>
-      const fotos = [
-        ["1AxjpEeM12rmTFWLTaBsYvG937KIrMMYb", "Nosso primeiro momento 💞"],
-        ["1QlVZjxjm_J23LQrslUtbz2gb5ScaNJ38", "A gente rindo igual besta 😆"],
-        ["1lx-WRpvsluE7AZjMG474mxaNgIRDAHVy", "Sempre linda 😍"],
-        ["1VwmZFhsoH-hkgCn1BrvyJCZUhvX5tSK7", "Eu amo esse dia ❤️"],
-        ["1wvkgHDU-ddutqm_iviHZ8jeAoQQb9Vp7", "Um momento só nosso 💗"],
-        ["15LwsB40uygv4TXHklUmDCovpMXRCYpmm", "Olhos que me encantam ✨"],
-        ["12MypKzr7wBqYzv28oNNLt-uwLLiFw_3N", "Meu coração é seu 💝"],
-        ["11Ti2CkGIe56S8f5pEYIkelXtvuEMJ1Hr", "Te amo hoje e sempre 💞"]
-      ];
-    </script>
-
-  </div>
+  <div class="photo-gallery"></div>
 
   <div class="music-controls">
     <button id="musicButton">Tocar Música 🎶</button>
@@ -173,73 +154,69 @@
   <audio id="birthdayMusic" loop>
     <source src="musica.mp3" type="audio/mpeg">
   </audio>
-
 </div>
 
 <script>
-/* Renderizar as fotos */
+/* Fotos e mensagens */
+const fotos = [
+  ["https://github.com/user-attachments/assets/cb50c28f-cfb2-46dc-adcf-8a47c4958bdd", "Nosso primeiro momento 💞"],
+  ["https://github.com/user-attachments/assets/69ad113e-8f69-42cf-bb2c-6d51d9f83f80", "Um dia especial contigo ❤️"],
+  ["https://github.com/user-attachments/assets/473bb60c-fbc2-4a6e-a14b-0aeff7baef18", "Sorrisos que amo 😍"],
+  ["https://github.com/user-attachments/assets/636cc626-06e1-44a0-9f99-326a37b74bf0", "Nossa bagunça favorita 😆"],
+  ["https://github.com/user-attachments/assets/558456ed-18c8-49e4-acdc-09cecb1f90c0", "Um momento inesquecível 💗"],
+  ["https://github.com/user-attachments/assets/5f1384ea-41f4-4ba9-b2a7-6aac28029180", "O teu olhar me encanta ✨"],
+  ["https://github.com/user-attachments/assets/26a18edb-6e3c-4bb7-812d-4a70a16d8005", "Te amo mais que tudo 💞"],
+  ["https://github.com/user-attachments/assets/0e0e848b-f7ca-4a28-bdd7-a30a4569d7a1", "Pra sempre nós 💝"],
+  ["https://github.com/user-attachments/assets/edb88f91-a1cf-4d14-8cff-eb178ad54d00", "Meu amor eterno 💕"]
+];
+
+/* Renderizar galeria */
 const gallery = document.querySelector(".photo-gallery");
 fotos.forEach(f => {
   gallery.innerHTML += `
     <div class="photo-card">
       <div class="inner">
-        <div class="front"><img src="https://drive.google.com/uc?export=download&id=${f[0]}"></div>
+        <div class="front">
+          <img src="${f[0]}" alt="Foto especial">
+          <p>Momentos 💜</p>
+        </div>
         <div class="back">${f[1]}</div>
       </div>
     </div>`;
 });
 
-/* Polaroid virar */
+/* Efeito virar */
 document.addEventListener("click", e => {
-  if(e.target.closest(".photo-card")) {
+  if (e.target.closest(".photo-card")) {
     e.target.closest(".photo-card").classList.toggle("flip");
   }
 });
 
-/* Quiz */
-const quizQuestions = [
-  { question:"Qual é a minha comida favorita?", options:["Pizza","Chocolate","Sorvete","Hambúrguer"], answer:1 },
-  { question:"Onde nos conhecemos?", options:["Escola","Trabalho","Internet","Amigos"], answer:2 },
-  { question:"Qual é nossa música especial?", options:["A","B","C","D"], answer:2 }
-];
-
-let current=0;
-function showQuestion(){
-  quizQuestion.textContent = quizQuestions[current].question;
-  quizOptions.innerHTML="";
-  quizQuestions[current].options.forEach((opt,i)=>{
-    let b=document.createElement("button");
-    b.textContent=opt;
-    b.onclick=()=>check(i);
-    quizOptions.appendChild(b);
-  });
-}
-function check(i){
-  if(i===quizQuestions[current].answer){
-    current++;
-    if(current<quizQuestions.length){ showQuestion(); }
-    else{ quizContainer.style.display="none"; hommageContainer.style.display="flex"; }
-  } else alert("Tenta de novo 😅");
-}
-showQuestion();
-
 /* Música */
-musicButton.onclick = ()=>{
-  if(birthdayMusic.paused){ birthdayMusic.play(); musicButton.textContent="Pausar Música ⏸️";}
-  else{ birthdayMusic.pause(); musicButton.textContent="Tocar Música 🎶";}
-}
+const musicButton = document.getElementById("musicButton");
+const birthdayMusic = document.getElementById("birthdayMusic");
 
-/* Corações */
-setInterval(()=>{
-  const h=document.createElement("div");
-  h.className="heart";
-  h.textContent="💗";
-  h.style.left=Math.random()*innerWidth+"px";
-  h.style.fontSize=(20+Math.random()*25)+"px";
-  h.style.animationDuration=(4+Math.random()*4)+"s";
+musicButton.onclick = () => {
+  if (birthdayMusic.paused) {
+    birthdayMusic.play();
+    musicButton.textContent = "Pausar Música ⏸️";
+  } else {
+    birthdayMusic.pause();
+    musicButton.textContent = "Tocar Música 🎶";
+  }
+};
+
+/* Corações animados */
+setInterval(() => {
+  const h = document.createElement("div");
+  h.className = "heart";
+  h.textContent = "💗";
+  h.style.left = Math.random() * innerWidth + "px";
+  h.style.fontSize = (20 + Math.random() * 25) + "px";
+  h.style.animationDuration = (4 + Math.random() * 4) + "s";
   document.body.appendChild(h);
-  setTimeout(()=>h.remove(),6000);
-},280);
+  setTimeout(() => h.remove(), 6000);
+}, 280);
 </script>
 
 </body>
