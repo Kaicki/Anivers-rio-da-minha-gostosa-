@@ -31,6 +31,7 @@
     max-width: 700px;
     text-align: center;
     font-size: 1.4em;
+    min-height: 80px;
   }
 
   /* Polaroid */
@@ -97,6 +98,7 @@
     border-radius: 14px;
     animation: heartbeat 1.3s infinite;
     cursor: pointer;
+    font-size: 1em;
   }
 
   @keyframes heartbeat {
@@ -123,13 +125,13 @@
 <!-- CONTEÚDO -->
 <div id="hommageContainer">
   <h1>Feliz Aniversário, Meu Amor! 💖</h1>
-  <p class="message">Você é o meu motivo de sorriso todos os dias... 💗</p>
+  <p class="message" id="typedText"></p>
 
   <div class="photo-gallery" id="gallery"></div>
 
   <div class="controls">
     <button id="musicButton">Tocar Música 🎶</button>
-    <button onclick="window.location.href='surpresa.html'">Surpresa 🎁</button>
+    <button onclick="window.location.href='https://kaicki.github.io/Flowers/'">Surpresa 🎁</button>
   </div>
 
   <audio id="birthdayMusic" loop>
@@ -138,6 +140,19 @@
 </div>
 
 <script>
+/* Texto com efeito de digitação */
+const text = "Você é o meu motivo de sorriso todos os dias... 💗";
+const typed = document.getElementById("typedText");
+let i = 0;
+function typeWriter() {
+  if (i < text.length) {
+    typed.innerHTML += text.charAt(i);
+    i++;
+    setTimeout(typeWriter, 70);
+  }
+}
+window.onload = typeWriter;
+
 /* Suas fotos */
 const fotos = [
   ["https://github.com/user-attachments/assets/128f9cbf-805c-477b-9d58-f91d7f0b4430", "OLHAR HIPNOTIZANTE 😍✨"],
